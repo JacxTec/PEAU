@@ -1,0 +1,154 @@
+ion-icon {
+  color:rgba(255, 255, 0, 0.553);
+  &:hover{
+    color:yellow
+  }
+}
+
+
+/* CENTRA VERTICALMENTE EL CONTENEDOR EN LA PANTALLA */
+#container {
+  text-align: center; // Centra el texto horizontal
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%); // Mueve hacia arriba la mitad de su altura para centrar verticalmente
+}
+
+/* ESTILO DEL TEXTO EN NEGRITA DENTRO DE #container */
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+/* ESTILO DEL PÁRRAFO EN #container */
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c; // Gris claro
+  margin: 0;
+}
+
+/* ENLACES SIN SUBRAYADO */
+#container a {
+  text-decoration: none;
+}
+
+/* TARJETA CON SOMBRA Y ANIMACIÓN */
+ion-card {
+  background-color: white;
+  border-radius: 10px;
+  margin-left: 33%;
+  margin-right: 33%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+
+  box-shadow: 0px 2px 6px #01ffd5; // Sombra turquesa tenue
+
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 4px 12px rgb(194, 248, 1); // Sombra más fuerte al pasar el mouse
+    border-radius: 12px;
+    transform: scale(1.01); // Pequeño zoom al pasar el puntero
+  }
+}
+
+/* ESTILO PARA LOS INPUTS */
+ion-input {
+  margin-top:19px;
+  color: yellowgreen; // Color del texto del input
+  margin-top: 10px;
+  padding-bottom: 19px;
+  --padding-start: 12px;
+  border-radius: 12px;
+  transition: border 0.3s;
+
+  --border: 1px solid #ff0000; // Borde rojo inicial (visible en algunos casos)
+
+  --highlight-color-focused: #00ff00; // Línea inferior cuando está enfocado
+  --color-focused: #00ff00; // Color del label flotante en focus
+  --border-color: #00ff00;  // Color del borde si está enfocado
+
+  &:hover {
+    box-shadow: 0px 4px 12px rgb(207, 248, 1); // Efecto de brillo al pasar el mouse
+    border-radius: 12px;
+  }
+}
+
+/* CUANDO EL INPUT ESTÁ ENFOCADO */
+ion-input:focus-within {
+  --border: 2px solid #3880ff; // (Esto sobreescribe el borde en azul, podés cambiarlo si querés)
+}
+
+/* ESTILO DEL BOTÓN */
+ion-button {
+  width: 33%; // Ancho del botón
+  margin-left: 33%;
+  margin-right: 33%;
+  margin-top: 10px;
+  border-radius: 8px;
+    &:hover {
+      color: #37ff00;
+      background-color: #00ff00;
+    box-shadow: 0px 4px 12px rgb(207, 248, 1); // Efecto de brillo al pasar el mouse
+    border-radius: 12px;
+  }
+}
+ion-segment{
+  border-radius: 8px;
+  border-color: #e5ff00;
+}
+ion-content{
+  background-color: black;
+}
+
+ion-segment{
+  background-color:black;
+}
+
+ion-title{
+  background-color: black;
+  align-content: center;
+}
+
+ion-tab-button{
+  &:hover{
+    color:rgb(38, 255, 0);
+  }
+
+}
+
+ion-tab-button:focus-within{
+  &:hover{
+    color:rgb(100, 134, 32);
+  }
+
+}
+
+ion-label{
+  &:hover{color: rgb(255, 255, 255);}
+}
+
+ion-tab-button.tab-selected {
+  color: rgb(0, 140, 255);
+}
+
+ion-tab-button.tab-selected ion-icon{
+  color: blueviolet;
+  &:hover{
+    color:aqua;
+  }
+}
+
+ion-header{
+  background-color: black;
+}
+
+ion-header,
+ion-toolbar {
+  --background: #000 !important; // Fuerza fondo negro puro
+  background-color: #000 !important; // Fallback por si acaso
+}
+

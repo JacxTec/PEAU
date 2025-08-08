@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Importaciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="seleccionarTodos()">Seleccionar Todos</ion-button>
+      <ion-button (click)="imprimirTodos()">Imprimir Seleccionados</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll-y="true" class="safe-area-scroll">
+
+  <ion-segment [(ngModel)]="segmentValue" (ionChange)="cambiarSegmento($event)">
+    <ion-segment-button value="Registrar" content-id="Registrar">
+      <ion-label>Registrar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Editar_Eliminar" content-id="Editar_Eliminar">
+      <ion-label>Editar / Eliminar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Lista" content-id="Lista">
+      <ion-label>Lista</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment-view>
+
+    <!-- Registrar -->
+    <ion-segment-content id="Registrar" *ngIf="segmentValue === 'Registrar'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>
+            {{ nuevaImportacion.id ? 'Editar Importación' : 'Registrar Importación' }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+          <ion-item>
+            <ion-label position="floating">Producto</ion-label>
+            <ion-select [(ngModel)]="nuevaImportacion.producto" placeholder="Selecciona un producto">
+              <ion-select-option *ngFor="let producto of productos" [value]="producto.nombre">
+                {{ producto.nombre }} - {{ producto.modelo }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Proveedor</ion-label>
+            <ion-select [(ngModel)]="nuevaImportacion.proveedor_id" placeholder="Selecciona proveedor">
+              <ion-select-option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+                {{ proveedor.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Cantidad</ion-label>
+            <ion-input type="number" [(ngModel)]="nuevaImportacion.cantidad"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Fecha</ion-label>
+            <ion-datetime display-format="DD/MM/YYYY" [(ngModel)]="nuevaImportacion.fecha"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-textarea rows="3" [(ngModel)]="nuevaImportacion.descripcion"></ion-textarea>
+          </ion-item>
+
+          <ion-button expand="block" (click)="guardarImportacion()">
+            {{ nuevaImportacion.id ? 'Actualizar' : 'Guardar' }}
+          </ion-button>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+    <!-- Editar / Eliminar -->
+    <ion-segment-content id="Editar_Eliminar" *ngIf="segmentValue === 'Editar_Eliminar'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Editar / Eliminar Importaciones</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-searchbar [(ngModel)]="filtro" (ionInput)="filtrarImportaciones()" placeholder="Buscar por producto o proveedor"></ion-searchbar>
+
+          <ion-list>
+            <ion-item *ngFor="let importacion of importacionesFiltradas">
+              <ion-checkbox slot="start" [checked]="seleccionados.includes(importacion.id)" (ionChange)="toggleSeleccion(importacion.id)"></ion-checkbox>
+              <ion-label>
+                <h3>{{ importacion.producto }}</h3>
+                <p>Proveedor: {{ importacion.proveedor_nombre }}</p>
+                <p>Cantidad: {{ importacion.cantidad }}</p>
+                <p>Fecha: {{ importacion.fecha | date:'dd/MM/yyyy' }}</p>
+              </ion-label>
+              <ion-button color="primary" fill="outline" size="small" (click)="editarImportacion(importacion)">
+                Editar
+              </ion-button>
+              <ion-button color="danger" fill="outline" size="small" (click)="eliminarImportacion(importacion.id)">
+                Eliminar
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+   <!-- Lista -->
+<ion-segment-content id="Lista" *ngIf="segmentValue === 'Lista'">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Lista de Importaciones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let importacion of importaciones" lines="none">
+          <ion-thumbnail slot="start" *ngIf="importacion.imagen_producto">
+            <img [src]="importacion.imagen_producto" alt="Producto" />
+          </ion-thumbnail>
+
+          <ion-label>
+            <h3>{{ importacion.producto }}</h3>
+            <p>Proveedor: {{ importacion.proveedor_nombre }}</p>
+            <p>Cantidad: {{ importacion.cantidad }}</p>
+            <p>Fecha: {{ importacion.fecha | date:'dd/MM/yyyy' }}</p>
+            <p>Descripción: {{ importacion.descripcion }}</p>
+
+            <ion-thumbnail *ngIf="importacion.imagen_proveedor">
+              <img [src]="importacion.imagen_proveedor" alt="Proveedor" />
+            </ion-thumbnail>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-segment-content>
+
+  </ion-segment-view>
+</ion-content>

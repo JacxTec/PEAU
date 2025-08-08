@@ -1,0 +1,262 @@
+ion-icon {
+  color: yellow;
+}
+
+#container {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+ion-card {
+  background-color: white;
+  border-radius: 10px;
+  margin: 5% auto;
+  box-shadow: 0px 2px 6px #01ffd5;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 4px 12px rgb(194, 248, 1);
+    border-radius: 12px;
+    transform: scale(1.01);
+  }
+}
+
+ion-input {
+  margin-top: 10px;
+  color: yellowgreen;
+  padding-bottom: 19px;
+  --padding-start: 12px;
+  border-radius: 12px;
+  --border: 1px solid #ff0000;
+  --highlight-color-focused: #00ff00;
+  --color-focused: #00ff00;
+  --border-color: #00ff00;
+
+  &:hover {
+    box-shadow: 0px 4px 12px rgb(207, 248, 1);
+    border-radius: 12px;
+  }
+
+  &:focus-within {
+    --border: 2px solid #3880ff;
+  }
+}
+
+ion-button {
+  width: 80%;
+  max-width: 300px;
+  margin: 10px auto;
+  border-radius: 8px;
+  display: block;
+
+  &:hover {
+    color: #37ff00;
+    background-color: #00ff00;
+    box-shadow: 0px 4px 12px rgb(207, 248, 1);
+    border-radius: 12px;
+  }
+}
+
+ion-segment {
+  border-radius: 8px;
+  border-color: #00ff00;
+  background-color: rgb(255, 255, 255);
+}
+
+
+ion-content {
+  --padding-bottom: env(keyboard-inset-bottom);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.scrollable-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 100px; /* espacio extra para el teclado */
+}
+
+ion-title {
+  background-color: rgba(0, 0, 0, 0);
+  text-align: center;
+}
+
+ion-header {
+  color: black;
+  background-color: #00ff00;
+}
+
+ion-toolbar {
+  color: yellow;
+  background-color: black;
+}
+
+ion-header,
+ion-toolbar {
+  --background: #000 !important;
+  background-color: #000 !important;
+}
+
+ion-toolbar ion-title {
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+
+.titulo-con-imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: yellow;
+}
+
+.icono-izquierda {
+  width: 24px;
+  height: 24px;
+}
+
+.preview-container {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.preview-img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 255, 132, 0.4);
+  margin-bottom: 8px;
+}
+
+#Titulo_proveedor {
+  color: #00ff00;
+}
+
+/* MEDIA QUERIES */
+
+@media (max-width: 480px) {
+  ion-card {
+    margin: 10px;
+  }
+
+  ion-button {
+    width: 90%;
+  }
+
+  .preview-img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+  ion-card {
+    margin: 20px;
+  }
+
+  ion-button {
+    width: 60%;
+  }
+
+  .preview-img {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (min-width: 1025px) {
+  ion-card {
+    width: 40%;
+  }
+
+  ion-button {
+    width: 33%;
+  }
+
+  .preview-img {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+ion-label{
+  color: #000;
+}
+ion-content {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.scrollable-card-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.preview-container {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.preview-img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 255, 132, 0.4);
+  margin-bottom: 8px;
+}
+
+ion-card {
+  background-color: white;
+  border-radius: 10px;
+  margin: 5% auto;
+  box-shadow: 0px 2px 6px #01ffd5;
+}
+
+ion-input {
+  margin-top: 10px;
+  --padding-start: 12px;
+  border-radius: 12px;
+  --border: 1px solid #ff0000;
+  --highlight-color-focused: #00ff00;
+}
+
+ion-button {
+  width: 80%;
+  max-width: 300px;
+  margin: 10px auto;
+  border-radius: 8px;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  ion-card { margin: 10px; }
+  .preview-img { width: 100px; height: 100px; }
+}
+
+@media (min-width: 1025px) {
+  ion-card { width: 40%; }
+  .preview-img { width: 140px; height: 140px; }
+}

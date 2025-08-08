@@ -1,0 +1,2 @@
+import{Da as o,Gb as a,Ta as i,Ua as r,jb as c}from"./chunk-QWAS3EZK.js";import{e as s}from"./chunk-M5U6FIFB.js";var l,m=s(()=>{a();l=(()=>{let t=class t{constructor(){}ngOnInit(){}};t.\u0275fac=function(n){return new(n||t)},t.\u0275cmp=o({type:t,selectors:[["app-productos"]],decls:2,vars:0,template:function(n,d){n&1&&(i(0,"p"),c(1,` productos works!
+`),r())},encapsulation:2});let e=t;return e})()});m();export{l as ProductosPage};

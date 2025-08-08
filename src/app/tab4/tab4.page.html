@@ -1,0 +1,235 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Productos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-segment [(ngModel)]="segmentoActivo" (ionChange)="alCambiarSegmento()">
+  <ion-segment-button value="registrar" content-id="registrar">
+    <ion-label>Registrar</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="editar" content-id="editar">
+    <ion-label>Editar</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="listar" content-id="listar">
+    <ion-label>Lista</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-segment-view>
+
+  <!-- REGISTRAR -->
+  <ion-segment-content id="registrar">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Registrar Producto</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input [(ngModel)]="nuevoProducto.nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Cantidad</ion-label>
+            <ion-input type="number" [(ngModel)]="nuevoProducto.cantidad"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Descripción</ion-label>
+            <ion-textarea [(ngModel)]="nuevoProducto.descripcion"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Marca</ion-label>
+            <ion-input [(ngModel)]="nuevoProducto.marca"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Modelo</ion-label>
+            <ion-input [(ngModel)]="nuevoProducto.modelo"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Voltaje</ion-label>
+            <ion-input [(ngModel)]="nuevoProducto.voltaje"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Potencia</ion-label>
+            <ion-input [(ngModel)]="nuevoProducto.potencia"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Corriente</ion-label>
+            <ion-input [(ngModel)]="nuevoProducto.corriente"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Precio</ion-label>
+            <ion-input type="number" [(ngModel)]="nuevoProducto.precio"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Proveedor</ion-label>
+            <ion-select [(ngModel)]="nuevoProducto.proveedor_id" placeholder="Selecciona proveedor">
+              <ion-select-option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+                {{ proveedor.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-input placeholder="Escriba aquí nueva categoría para agregar" [(ngModel)]="nuevaCategoriaNombre"></ion-input>
+            <ion-button size="small" color="primary" (click)="agregarCategoriaEditar()">+</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-label>Categoría</ion-label>
+            <ion-select [(ngModel)]="nuevoProducto.categoria_id" placeholder="Selecciona categoría">
+              <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                {{ categoria.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Imagen</ion-label>
+            <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+          </ion-item>
+        </ion-list>
+
+        <ion-row class="ion-justify-content-center ion-padding" *ngIf="nuevoProducto.imagen_base64">
+          <ion-img [src]="nuevoProducto.imagen_base64" style="max-width: 200px;"></ion-img>
+        </ion-row>
+
+        <ion-button expand="block" color="primary" (click)="registrarProducto()">Guardar Producto</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-segment-content>
+
+  <!-- EDITAR -->
+  <ion-segment-content id="editar">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Editar Producto</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <!-- Barra de búsqueda -->
+        <ion-searchbar [(ngModel)]="textoBusqueda" (ionInput)="filtrarProductos()" placeholder="Buscar por nombre o categoría..."></ion-searchbar>
+
+        <ion-list>
+          <ion-item button *ngFor="let producto of productosFiltrados" (click)="seleccionarProductoParaEditar(producto)">
+            <ion-label>
+              <h2>{{ producto.nombre }}</h2>
+              <p>{{ producto.marca }} - {{ producto.modelo }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ng-container *ngIf="productoEditable">
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Nombre</ion-label>
+              <ion-input [(ngModel)]="productoEditable.nombre"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Cantidad</ion-label>
+              <ion-input type="number" [(ngModel)]="productoEditable.cantidad"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="floating">Descripción</ion-label>
+              <ion-textarea [(ngModel)]="productoEditable.descripcion"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Marca</ion-label>
+              <ion-input [(ngModel)]="productoEditable.marca"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Modelo</ion-label>
+              <ion-input [(ngModel)]="productoEditable.modelo"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Voltaje</ion-label>
+              <ion-input [(ngModel)]="productoEditable.voltaje"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Potencia</ion-label>
+              <ion-input [(ngModel)]="productoEditable.potencia"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Corriente</ion-label>
+              <ion-input [(ngModel)]="productoEditable.corriente"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Precio</ion-label>
+              <ion-input type="number" [(ngModel)]="productoEditable.precio"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Proveedor</ion-label>
+              <ion-select [(ngModel)]="productoEditable.proveedor_id" placeholder="Selecciona proveedor">
+                <ion-select-option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+                  {{ proveedor.nombre }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-input placeholder="Nueva categoría" [(ngModel)]="nuevaCategoriaNombre"></ion-input>
+              <ion-button size="small" color="primary" (click)="agregarCategoriaEditar()">+</ion-button>
+            </ion-item>
+            <ion-item>
+              <ion-label>Categoría</ion-label>
+              <ion-select [(ngModel)]="productoEditable.categoria_id" placeholder="Selecciona categoría">
+                <ion-select-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                  {{ categoria.nombre }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Imagen</ion-label>
+              <input type="file" (change)="onFileSelectedEditar($event)" accept="image/*" />
+            </ion-item>
+          </ion-list>
+
+          <ion-row class="ion-justify-content-center ion-padding" *ngIf="productoEditable.imagen_base64">
+            <ion-img [src]="productoEditable.imagen_base64" style="max-width: 200px;"></ion-img>
+          </ion-row>
+
+          <ion-button expand="block" color="success" (click)="guardarEdicion()">Guardar Cambios</ion-button>
+          <ion-button expand="block" color="danger" (click)="eliminarProducto(productoEditable.id)">Eliminar Producto</ion-button>
+        </ng-container>
+      </ion-card-content>
+    </ion-card>
+  </ion-segment-content>
+
+  <!-- LISTAR -->
+  <ion-segment-content id="listar">
+    <ion-card *ngFor="let producto of productos">
+      <ion-card-content>
+        <ion-row class="ion-justify-content-center ion-margin-top">
+          <ion-img [src]="producto.imagen_base64" style="max-width: 200px;" *ngIf="producto.imagen_base64"></ion-img>
+        </ion-row>
+        <ion-card-header class="ion-text-center">
+          <ion-card-title>{{ producto.nombre }}</ion-card-title>
+          <ion-col size="6"><strong>Cantidad:</strong> {{ producto.cantidad }}</ion-col>
+          <ion-card-subtitle>{{ producto.marca }} - {{ producto.modelo }}</ion-card-subtitle>
+        </ion-card-header>
+        <p class="ion-padding-start ion-padding-end">
+          <strong>Descripción:</strong><br />
+          {{ producto.descripcion }}
+        </p>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6"><strong>Voltaje:</strong> {{ producto.voltaje }}</ion-col>
+            <ion-col size="6"><strong>Potencia:</strong> {{ producto.potencia }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6"><strong>Corriente:</strong> {{ producto.corriente }}</ion-col>
+            <ion-col size="6"><strong>Precio:</strong> ${{ producto.precio }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6"><strong>Proveedor:</strong> {{ obtenerNombreProveedor(producto.proveedor_id) }}</ion-col>
+            <ion-col size="6"><strong>Categoría:</strong> {{ obtenerNombreCategoria(producto.categoria_id) }}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-segment-content>
+
+</ion-segment-view>

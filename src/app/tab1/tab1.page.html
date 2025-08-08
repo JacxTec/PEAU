@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Proveedores</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="seleccionarTodos()">Seleccionar Todos</ion-button>
+      <ion-button (click)="imprimirTodos()">Imprimir Seleccionados</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll-y="true" class="safe-area-scroll">
+
+  <ion-segment value="Agregar_Proveedor">
+    <ion-segment-button value="Agregar_Proveedor" content-id="Agregar_Proveedor">
+      <ion-label>Agregar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Eliminar/Editar_provedores" content-id="Eliminar/Editar_provedores">
+      <ion-label>Editar / Eliminar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Lista_Proveedores" content-id="Lista_Proveedores">
+      <ion-label>Lista</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-segment-view>
+
+    <!-- AGREGAR -->
+    <ion-segment-content id="Agregar_Proveedor">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Agregar Proveedor</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="scrollable-card-content">
+          <div *ngIf="imagenPreview" class="preview-container">
+            <img [src]="imagenPreview" class="preview-img" />
+            <ion-button fill="clear" color="danger" size="small" (click)="eliminarImagen()">Eliminar Imagen</ion-button>
+          </div>
+
+          <ion-input [(ngModel)]="nuevoProveedor.nombre" label="Nombre" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="nuevoProveedor.direccion" label="Dirección" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="nuevoProveedor.telefono" label="Teléfono" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="nuevoProveedor.rfc" label="RFC" fill="outline"></ion-input>
+
+          <ion-label>Agregar Imagen
+            <input type="file" (change)="cargarImagen($event)" accept="image/*" />
+          </ion-label>
+
+          <ion-button expand="block" (click)="guardarProveedor()">Guardar</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+    <!-- EDITAR -->
+    <ion-segment-content id="Eliminar/Editar_provedores">
+      <ion-card>
+        <ion-card-content>
+          <ion-input [(ngModel)]="filtroBusqueda" (ionInput)="onBuscarChange()" placeholder="Buscar por nombre o RFC" label="Buscar" label-placement="floating" fill="outline"></ion-input>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngFor="let proveedor of listaProveedoresFiltrada">
+        <ion-card-header>
+          <ion-card-title>{{ proveedor.nombre }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-input [(ngModel)]="proveedor.nombre" label="Nombre" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="proveedor.direccion" label="Dirección" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="proveedor.telefono" label="Teléfono" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="proveedor.rfc" label="RFC" fill="outline"></ion-input>
+          <ion-img *ngIf="proveedor.imagen" [src]="proveedor.imagen" style="width: 80px;"></ion-img>
+          <input type="file" (change)="cambiarImagenProveedor($event, proveedor)" accept="image/*" />
+          <ion-button fill="clear" color="danger" (click)="eliminarImagenProveedor(proveedor)">Eliminar Imagen</ion-button>
+          <ion-button expand="block" color="success" (click)="guardarCambiosProveedor(proveedor)">Guardar Cambios</ion-button>
+          <ion-button expand="block" color="danger" (click)="eliminarProveedor(proveedor.id)">Eliminar</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+    <!-- LISTA -->
+    <ion-segment-content id="Lista_Proveedores">
+      <ion-card>
+        <ion-card-content>
+          <ion-button expand="block" (click)="seleccionarTodos()">Seleccionar Todos</ion-button>
+          <ion-button expand="block" (click)="imprimirTodos()">Imprimir Seleccionados</ion-button>
+          <ion-button expand="block" (click)="exportarPDF()">Exportar Seleccionados a PDF</ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngFor="let proveedor of listaProveedores">
+        <ion-item lines="none">
+          <ion-checkbox slot="start" [(ngModel)]="proveedor.seleccionado"></ion-checkbox>
+          <ion-avatar slot="start" *ngIf="proveedor.imagen">
+            <img [src]="proveedor.imagen" alt="Imagen del proveedor" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ proveedor.nombre }}</h2>
+            <p><strong>Dirección:</strong> {{ proveedor.direccion }}</p>
+            <p><strong>Teléfono:</strong> {{ proveedor.telefono }}</p>
+            <p><strong>RFC:</strong> {{ proveedor.rfc }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+
+      <ion-card *ngIf="listaProveedores.length === 0">
+        <ion-card-content>No hay proveedores registrados.</ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+  </ion-segment-view>
+</ion-content>

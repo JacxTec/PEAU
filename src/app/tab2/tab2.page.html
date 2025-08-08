@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Clientes</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="seleccionarTodos()">Seleccionar Todos</ion-button>
+      <ion-button (click)="imprimirSeleccionados()">Imprimir Seleccionados</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" scroll-y="true" class="safe-area-scroll">
+
+  <!-- Segmentos -->
+  <ion-segment [(ngModel)]="segmentoActivo">
+    <ion-segment-button value="agregar" content-id="agregar">
+      <ion-label>Agregar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="editar" content-id="editar">
+      <ion-label>Editar / Eliminar</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="lista" content-id="lista">
+      <ion-label>Lista</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Contenedor de vistas del segmento -->
+  <ion-segment-view>
+
+    <!-- AGREGAR CLIENTE -->
+    <ion-segment-content id="agregar">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Agregar Cliente</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="imagenPreview">
+            <img [src]="imagenPreview" style="width: 100px;" />
+            <ion-button fill="clear" color="danger" size="small" (click)="eliminarImagen()">Eliminar Imagen</ion-button>
+          </div>
+          <ion-input [(ngModel)]="nuevoCliente.nombre" label="Nombre" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="nuevoCliente.email" label="Email" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="nuevoCliente.telefono" label="Teléfono" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="nuevoCliente.direccion" label="Dirección" fill="outline"></ion-input>
+          <input type="file" (change)="cargarImagen($event)" accept="image/*" />
+          <ion-button expand="block" (click)="guardarCliente()">Guardar</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+    <!-- EDITAR / ELIMINAR CLIENTE -->
+    <ion-segment-content id="editar">
+      <ion-card>
+        <ion-card-content>
+          <ion-input
+            [(ngModel)]="filtroBusqueda"
+            (ionInput)="filtrarClientes()"
+            placeholder="Buscar por nombre o email"
+            label="Buscar"
+            label-placement="floating"
+            fill="outline">
+          </ion-input>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngFor="let cliente of clientesFiltrados">
+        <ion-card-header>
+          <ion-card-title>{{ cliente.nombre }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-input [(ngModel)]="cliente.nombre" label="Nombre" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="cliente.email" label="Email" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="cliente.telefono" label="Teléfono" fill="outline"></ion-input>
+          <ion-input [(ngModel)]="cliente.direccion" label="Dirección" fill="outline"></ion-input>
+          <ion-img *ngIf="cliente.imagen" [src]="cliente.imagen" style="width: 80px;"></ion-img>
+          <input type="file" (change)="cambiarImagenCliente($event, cliente)" accept="image/*" />
+          <ion-button fill="clear" color="danger" (click)="eliminarImagenCliente(cliente)">Eliminar Imagen</ion-button>
+          <ion-button expand="block" color="success" (click)="guardarCambiosCliente(cliente)">Guardar Cambios</ion-button>
+          <ion-button expand="block" color="danger" (click)="eliminarCliente(cliente.id)">Eliminar</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+    <!-- LISTA DE CLIENTES -->
+    <ion-segment-content id="lista">
+      <ion-card>
+        <ion-card-content>
+          <ion-button expand="block" (click)="seleccionarTodos()">Seleccionar Todos</ion-button>
+          <ion-button expand="block" (click)="imprimirSeleccionados()">Imprimir Seleccionados</ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngFor="let cliente of clientes">
+        <ion-item lines="none">
+          <ion-checkbox slot="start" [(ngModel)]="cliente.seleccionado"></ion-checkbox>
+          <ion-avatar slot="start" *ngIf="cliente.imagen">
+            <img [src]="cliente.imagen" alt="Imagen del cliente" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{ cliente.nombre }}</h2>
+            <p><strong>Email:</strong> {{ cliente.email }}</p>
+            <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+            <p><strong>Dirección:</strong> {{ cliente.direccion }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-card>
+
+      <ion-card *ngIf="clientes.length === 0">
+        <ion-card-content>No hay clientes registrados.</ion-card-content>
+      </ion-card>
+    </ion-segment-content>
+
+  </ion-segment-view>
+</ion-content>

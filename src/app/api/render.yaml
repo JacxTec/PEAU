@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: pe-backend-frontend
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: DB_HOST
+        value: bdz7f25tmmyom6vwfqzr-mysql.services.clever-cloud.com
+      - key: DB_PORT
+        value: 3306
+      - key: DB_USER
+        value: uhjhdejjsvcg9h8u
+      - key: DB_PASSWORD
+        value: UNlOhQJtlzulLlW3A2LE
+      - key: DB_NAME
+        value: bdz7f25tmmyom6vwfqzr
