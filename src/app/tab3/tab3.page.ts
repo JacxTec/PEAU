@@ -73,7 +73,7 @@ Keyboard.setScroll({ isDisabled: false });
 export class Tab3Page implements OnInit {
   private apiBaseUrl = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api'
-    : 'https://pe-backend-frontend.onrender.com/api';
+    : 'https://api-pa.onrender.com/api';
 
   segmentValue = 'Registrar';
 
