@@ -60,7 +60,7 @@ export class Tab2Page {
 
   readonly API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3000/api/clientes'
-  : 'https://pe-backend-frontend.onrender.com/api/clientes';
+  : 'https://api-pa.onrender.com/api/clientes';
 
   constructor() {
     this.cargarClientes();
