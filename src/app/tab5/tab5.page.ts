@@ -42,7 +42,7 @@ export class Tab5Page implements OnInit {
 
   private apiBase = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api'
-    : 'https://pe-backend-frontend.onrender.com/api';
+    : 'https://api-pa.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 
