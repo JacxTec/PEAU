@@ -41,7 +41,7 @@ export class Tab4Page implements OnInit {
 
   private baseApiUrl = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api'
-    : 'https://pe-backend-frontend.onrender.com/api';
+    : 'https://api-pa.onrender.com/api';
 
   private apiUrl = `${this.baseApiUrl}/productos`;
   private apiProveedores = `${this.baseApiUrl}/proveedores`;
