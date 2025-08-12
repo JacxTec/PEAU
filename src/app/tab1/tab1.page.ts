@@ -34,7 +34,7 @@ export class Tab1Page {
   // Usa API local si estás en localhost, si no usa producción en Render
   apiUrl = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api/proveedores'
-    : 'https://pe-backend-frontend.onrender.com/api/proveedores';
+    : 'https://api-pa.onrender.com/api/proveedores';
 
   constructor() {
     this.obtenerProveedores();
